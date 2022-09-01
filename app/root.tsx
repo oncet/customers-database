@@ -1,4 +1,4 @@
-import { MantineProvider, AppShell, Header } from "@mantine/core";
+import { MantineProvider, AppShell, Header, Anchor } from "@mantine/core";
 import type { MetaFunction } from "@remix-run/node";
 import {
   Link,
@@ -29,7 +29,9 @@ export default function App() {
             padding="md"
             header={
               <Header height={60} p="xs">
-                <Link to="/">Customers database</Link>
+                <Anchor component={Link} to="/">
+                  Customers database
+                </Anchor>
               </Header>
             }
             styles={(theme) => ({

@@ -4,6 +4,7 @@ import { Link, useLoaderData } from "@remix-run/react";
 import type { Prisma } from "@prisma/client";
 
 import { db } from "~/utils/db.server";
+import { Anchor, Title } from "@mantine/core";
 
 type JobWithCustomer = Prisma.JobGetPayload<{
   include: {
@@ -41,11 +42,13 @@ export default function Job() {
 
   return (
     <>
-      <h1>{name}</h1>
+      <Title>{name}</Title>
       <dl>
         <dt>Customer</dt>
         <dd>
-          <Link to={"/customer/" + Customer.id}>{Customer.name}</Link>
+          <Anchor component={Link} to={"/customer/" + Customer.id}>
+            {Customer.name}
+          </Anchor>
         </dd>
       </dl>
     </>

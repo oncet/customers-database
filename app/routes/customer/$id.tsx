@@ -2,8 +2,10 @@ import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import type { Prisma } from "@prisma/client";
+import { Title, Text, List } from "@mantine/core";
 
 import { db } from "~/utils/db.server";
+import { Anchor } from "@mantine/core";
 
 type CustomerWithJobs = Prisma.CustomerGetPayload<{
   include: {
@@ -41,15 +43,18 @@ export default function Job() {
 
   return (
     <>
-      <h1>{name}</h1>
+      <Text>Customer</Text>
+      <Title>{name}</Title>
       {jobs && (
-        <ul>
+        <List>
           {jobs.map((job) => (
-            <li key={job.id}>
-              <Link to={"/job/" + job.id}>{job.name}</Link>
-            </li>
+            <List.Item key={job.id}>
+              <Anchor component={Link} to={"/job/" + job.id}>
+                {job.name}
+              </Anchor>
+            </List.Item>
           ))}
-        </ul>
+        </List>
       )}
     </>
   );
