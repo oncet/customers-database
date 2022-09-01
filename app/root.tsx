@@ -1,3 +1,4 @@
+import { MantineProvider } from "@mantine/core";
 import type { MetaFunction } from "@remix-run/node";
 import {
   Link,
@@ -17,20 +18,22 @@ export const meta: MetaFunction = () => ({
 
 export default function App() {
   return (
-    <html lang="en">
-      <head>
-        <Meta />
-        <Links />
-      </head>
-      <body>
-        <header>
-          <Link to="/">Customers database</Link>
-        </header>
-        <Outlet />
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
-    </html>
+    <MantineProvider withGlobalStyles withNormalizeCSS>
+      <html lang="en">
+        <head>
+          <Meta />
+          <Links />
+        </head>
+        <body>
+          <header>
+            <Link to="/">Customers database</Link>
+          </header>
+          <Outlet />
+          <ScrollRestoration />
+          <Scripts />
+          <LiveReload />
+        </body>
+      </html>
+    </MantineProvider>
   );
 }
