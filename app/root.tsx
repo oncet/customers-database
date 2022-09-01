@@ -1,4 +1,4 @@
-import { MantineProvider } from "@mantine/core";
+import { MantineProvider, AppShell, Header } from "@mantine/core";
 import type { MetaFunction } from "@remix-run/node";
 import {
   Link,
@@ -25,13 +25,27 @@ export default function App() {
           <Links />
         </head>
         <body>
-          <header>
-            <Link to="/">Customers database</Link>
-          </header>
-          <Outlet />
-          <ScrollRestoration />
-          <Scripts />
-          <LiveReload />
+          <AppShell
+            padding="md"
+            header={
+              <Header height={60} p="xs">
+                <Link to="/">Customers database</Link>
+              </Header>
+            }
+            styles={(theme) => ({
+              main: {
+                backgroundColor:
+                  theme.colorScheme === "dark"
+                    ? theme.colors.dark[8]
+                    : theme.colors.gray[0],
+              },
+            })}
+          >
+            <Outlet />
+            <ScrollRestoration />
+            <Scripts />
+            <LiveReload />
+          </AppShell>
         </body>
       </html>
     </MantineProvider>
