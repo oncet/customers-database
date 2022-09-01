@@ -17,8 +17,8 @@ model Customer {
 }
 
 model Job {
-  id         Int       @id @default(autoincrement())
+  id         Int      @id @default(autoincrement())
   name       String
-  Customer   Customer? @relation(fields: [customerId], references: [id])
-  customerId Int?
+  Customer   Customer @relation(fields: [customerId], references: [id])
+  customerId Int
 }

@@ -1,6 +1,6 @@
 import type { Customer } from "@prisma/client";
 import { json, LoaderFunction } from "@remix-run/node";
-import { useLoaderData } from "@remix-run/react";
+import { Link, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
 type LoaderData = { customers: Array<Customer> };
@@ -17,15 +17,14 @@ export default function Index() {
   const { customers } = useLoaderData<LoaderData>();
 
   return (
-    <>
-      <h1>Hello world!</h1>
-      {customers && (
-        <ul>
-          {customers.map((customer) => (
-            <li>{customer.name}</li>
-          ))}
-        </ul>
-      )}
-    </>
+    customers && (
+      <ul>
+        {customers.map((customer) => (
+          <li>
+            <Link to={"customer/" + customer.id}>{customer.name}</Link>
+          </li>
+        ))}
+      </ul>
+    )
   );
 }
