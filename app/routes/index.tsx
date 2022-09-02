@@ -1,4 +1,4 @@
-import { Anchor, List, Text, Title } from "@mantine/core";
+import { Anchor, List, Stack, Text, Title } from "@mantine/core";
 import type { Customer } from "@prisma/client";
 import { json, LoaderFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
@@ -18,7 +18,7 @@ export default function Index() {
   const { customers } = useLoaderData<LoaderData>();
 
   return customers ? (
-    <>
+    <Stack>
       <Title>Customers</Title>
       <List>
         {customers.map((customer) => (
@@ -29,7 +29,7 @@ export default function Index() {
           </List.Item>
         ))}
       </List>
-    </>
+    </Stack>
   ) : (
     <Text>No customers found :(</Text>
   );

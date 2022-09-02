@@ -1,4 +1,10 @@
-import { MantineProvider, AppShell, Header, Anchor } from "@mantine/core";
+import {
+  MantineProvider,
+  AppShell,
+  Header,
+  Anchor,
+  Group,
+} from "@mantine/core";
 import type { MetaFunction } from "@remix-run/node";
 import {
   Link,
@@ -26,22 +32,15 @@ export default function App() {
         </head>
         <body>
           <AppShell
-            padding="md"
             header={
               <Header height={60} p="xs">
-                <Anchor component={Link} to="/">
-                  Customers database
-                </Anchor>
+                <Group sx={{ height: "100%" }}>
+                  <Anchor component={Link} to="/">
+                    Customers database
+                  </Anchor>
+                </Group>
               </Header>
             }
-            styles={(theme) => ({
-              main: {
-                backgroundColor:
-                  theme.colorScheme === "dark"
-                    ? theme.colors.dark[8]
-                    : theme.colors.gray[0],
-              },
-            })}
           >
             <Outlet />
             <ScrollRestoration />
