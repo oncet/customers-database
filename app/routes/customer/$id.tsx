@@ -34,7 +34,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export const meta: MetaFunction = ({ data }) => {
   return {
-    title: data ? data.name : "Customer not found",
+    title: data ? data.name + " - Customer" : "Customer not found",
   };
 };
 

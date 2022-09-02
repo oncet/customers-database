@@ -1,7 +1,7 @@
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { Anchor, Stack, Title, Breadcrumbs } from "@mantine/core";
+import { Anchor, Stack, Title, Text, Breadcrumbs } from "@mantine/core";
 import type { Prisma } from "@prisma/client";
 
 import { db } from "~/utils/db.server";
@@ -33,7 +33,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export const meta: MetaFunction = ({ data }) => {
   return {
-    title: data ? data.name : "Job not found",
+    title: data ? data.name + " - Job" : "Job not found",
   };
 };
 
@@ -44,14 +44,12 @@ export default function Job() {
     <Stack>
       <Breadcrumbs>Job</Breadcrumbs>
       <Title>{name}</Title>
-      <dl>
-        <dt>Customer</dt>
-        <dd>
-          <Anchor component={Link} to={"/customer/" + Customer.id}>
-            {Customer.name}
-          </Anchor>
-        </dd>
-      </dl>
+      <Title order={2}>Customer</Title>
+      <Text>
+        <Anchor component={Link} to={"/customer/" + Customer.id}>
+          {Customer.name}
+        </Anchor>
+      </Text>
     </Stack>
   );
 }
