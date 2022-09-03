@@ -3,7 +3,7 @@ import { faker } from "@faker-js/faker";
 
 const prisma = new PrismaClient();
 
-const capitalizeFirstLetter = ([first = "", ...rest]: string) =>
+const capitalizeFirstLetter = ([first = "", ...rest]) =>
   [first.toUpperCase(), ...rest].join("");
 
 const getRandomInt = (min, max) => {
