@@ -1,6 +1,10 @@
 import { PrismaClient } from "@prisma/client";
+import { faker } from "@faker-js/faker";
 
 const prisma = new PrismaClient();
+
+const capitalizeFirstLetter = ([first = "", ...rest]: string) =>
+  [first.toUpperCase(), ...rest].join("");
 
 const getRandomInt = (min: number, max: number) => {
   min = Math.ceil(min);
@@ -9,17 +13,19 @@ const getRandomInt = (min: number, max: number) => {
 };
 
 async function main() {
-  for (let i = 0; i < 3; i++) {
-    await prisma.customer.create({
+  for (let i = 0; i < 10; i++) {
+    const customer = await prisma.customer.create({
       data: {
-        name: "Juan Pérez",
+        name: faker.name.fullName(),
         jobs: {
-          create: Array.from({ length: getRandomInt(1, 3) }, () => ({
-            name: "Instalación AC",
+          create: Array.from({ length: getRandomInt(1, 5) }, () => ({
+            name: capitalizeFirstLetter(faker.lorem.words()),
           })),
         },
       },
     });
+
+    console.log(customer);
   }
 }
 
