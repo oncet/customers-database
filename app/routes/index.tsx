@@ -23,20 +23,21 @@ export const meta: MetaFunction = () => {
 export default function Index() {
   const { customers } = useLoaderData<LoaderData>();
 
-  return customers ? (
+  return (
     <Stack>
       <Title>Customers</Title>
-      <List>
-        {customers.map((customer) => (
-          <List.Item key={customer.id}>
-            <Anchor component={Link} to={"customer/" + customer.id}>
-              {customer.name}
-            </Anchor>
-          </List.Item>
-        ))}
-      </List>
+      {!!customers.length && (
+        <List>
+          {customers.map((customer) => (
+            <List.Item key={customer.id}>
+              <Anchor component={Link} to={"customer/" + customer.id}>
+                {customer.name}
+              </Anchor>
+            </List.Item>
+          ))}
+        </List>
+      )}
+      {!customers.length && <Text>No customers found :(</Text>}
     </Stack>
-  ) : (
-    <Text>No customers found :(</Text>
   );
 }
