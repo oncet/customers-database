@@ -9,19 +9,17 @@ const getRandomInt = (min: number, max: number) => {
 };
 
 async function main() {
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 3; i++) {
     const customer = await prisma.customer.create({
       data: {
         name: "Juan Pérez",
         jobs: {
-          create: Array.from({ length: getRandomInt(1, 5) }, () => ({
+          create: Array.from({ length: getRandomInt(1, 3) }, () => ({
             name: "Instalación AC",
           })),
         },
       },
     });
-
-    console.log(customer);
   }
 }
 
