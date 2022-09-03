@@ -15,6 +15,7 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { StylesPlaceholder } from "@mantine/remix";
 
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
@@ -29,6 +30,7 @@ export default function App() {
         <head>
           <Meta />
           <Links />
+          <StylesPlaceholder />
         </head>
         <body>
           <AppShell
