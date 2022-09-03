@@ -1,5 +1,5 @@
 {
-  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "prisma/seed.js"],
+  "include": ["remix.env.d.ts", "**/*.ts", "**/*.tsx", "prisma/seed.mjs"],
   "compilerOptions": {
     "lib": ["DOM", "DOM.Iterable", "ES2019"],
     "isolatedModules": true,
