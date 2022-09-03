@@ -22,7 +22,7 @@ export default function Index() {
       <Title>Customers</Title>
       <List>
         {customers.map((customer) => (
-          <List.Item>
+          <List.Item key={customer.id}>
             <Anchor component={Link} to={"customer/" + customer.id}>
               {customer.name}
             </Anchor>
