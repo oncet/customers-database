@@ -1,10 +1,13 @@
 import { RemixBrowser } from "@remix-run/react";
-import { hydrate } from "react-dom";
+import { hydrateRoot } from "react-dom/client";
 import { ClientProvider } from "@mantine/remix";
+import { createEmotionCache } from "@mantine/core";
 
-hydrate(
+createEmotionCache({ key: "mantine" });
+
+hydrateRoot(
+  document,
   <ClientProvider>
     <RemixBrowser />
-  </ClientProvider>,
-  document
+  </ClientProvider>
 );
