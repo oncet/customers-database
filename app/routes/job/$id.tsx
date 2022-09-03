@@ -42,7 +42,7 @@ export default function Job() {
 
   return (
     <Stack>
-      <Breadcrumbs>Job</Breadcrumbs>
+      <Breadcrumbs>{["Job", name]}</Breadcrumbs>
       <Title>{name}</Title>
       <Title order={2}>Customer</Title>
       <Text>

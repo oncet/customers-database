@@ -38,12 +38,12 @@ export const meta: MetaFunction = ({ data }) => {
   };
 };
 
-export default function Job() {
+export default function Customer() {
   const { name, jobs } = useLoaderData<CustomerWithJobs>();
 
   return (
     <Stack>
-      <Breadcrumbs>Customer</Breadcrumbs>
+      <Breadcrumbs>{["Customer", name]}</Breadcrumbs>
       <Title>{name}</Title>
       {jobs && (
         <>
