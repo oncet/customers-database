@@ -1,6 +1,6 @@
 import { Anchor, List, Stack, Text, Title } from "@mantine/core";
 import type { Customer } from "@prisma/client";
-import { json, LoaderFunction } from "@remix-run/node";
+import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { db } from "~/utils/db.server";
 
@@ -12,6 +12,12 @@ export const loader: LoaderFunction = async () => {
   };
 
   return json(data);
+};
+
+export const meta: MetaFunction = () => {
+  return {
+    title: "Customers database",
+  };
 };
 
 export default function Index() {

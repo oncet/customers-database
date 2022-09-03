@@ -1,41 +1,25 @@
-# Welcome to Remix!
+# customers-database
 
-- [Remix Docs](https://remix.run/docs)
+## Getting started
 
-## Fly Setup
+Start by cloning or downloading the source code and installing dependencies.
 
-1. [Install `flyctl`](https://fly.io/docs/getting-started/installing-flyctl/)
+Then copy the `.env.example` file to `.env`:
 
-2. Sign up and log in to Fly
-
-```sh
-flyctl auth signup
+```
+cp .env.example .env
 ```
 
-3. Setup Fly. It might ask if you want to deploy, say no since you haven't built the app yet.
+Run database migrations:
 
-```sh
-flyctl launch
+```
+npx prisma migrate reset
 ```
 
-## Development
+And finally start the app:
 
-From your terminal:
-
-```sh
+```
 npm run dev
 ```
 
-This starts your app in development mode, rebuilding assets on file changes.
-
-## Deployment
-
-If you've followed the setup instructions already, all you need to do is run this:
-
-```sh
-npm run deploy
-```
-
-You can run `flyctl info` to get the url and ip address of your server.
-
-Check out the [fly docs](https://fly.io/docs/getting-started/node/) for more information.
+Happy coding!
