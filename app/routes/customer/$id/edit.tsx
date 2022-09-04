@@ -1,12 +1,19 @@
+import React, { useState } from "react";
 import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, useLoaderData } from "@remix-run/react";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import type { Prisma } from "@prisma/client";
 import type { ActionFunction } from "@remix-run/node";
-import { Title, List, Stack, Breadcrumbs } from "@mantine/core";
+import {
+  Anchor,
+  Title,
+  Stack,
+  Breadcrumbs,
+  TextInput,
+  Button,
+} from "@mantine/core";
 
 import { db } from "~/utils/db.server";
-import { Anchor } from "@mantine/core";
 
 type CustomerWithJobs = Prisma.CustomerGetPayload<{
   include: {
@@ -50,17 +57,35 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function EditCustomer() {
-  const { name, jobs } = useLoaderData<CustomerWithJobs>();
+  const { id, name, jobs } = useLoaderData<CustomerWithJobs>();
+  const [nameValue, setNameValue] = useState(name);
+
+  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setNameValue(event.target.value);
+  };
 
   return (
     <Stack>
-      <Breadcrumbs>{["Customer", name, "Edit"]}</Breadcrumbs>
+      <Breadcrumbs>
+        {[
+          "Customer",
+          <Anchor component={Link} to={"/customer/" + id}>
+            {name}
+          </Anchor>,
+          "Edit",
+        ]}
+      </Breadcrumbs>
       <Title>Edit customer</Title>
       <Form method="put">
-        <label>
-          Name <input name="name" />
-        </label>
-        <button type="submit">Update customer</button>
+        <Stack>
+          <TextInput
+            label="Name"
+            name="name"
+            value={nameValue}
+            onChange={handleOnChange}
+          />
+          <Button type="submit">Update customer</Button>
+        </Stack>
       </Form>
     </Stack>
   );
