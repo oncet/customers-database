@@ -25,7 +25,7 @@ async function main() {
         jobs: {
           create: Array.from({ length: getRandomInt(1, 5) }, () => ({
             name: capitalizeFirstLetter(faker.lorem.words()),
-            // customerId: 1,
+            customerId: getRandomInt(1, 5),
             start_date: faker.date.recent(10),
             end_date: faker.date.future(5),
             address: faker.address.streetAddress(true),

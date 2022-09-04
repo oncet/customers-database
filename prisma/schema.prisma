@@ -29,6 +29,6 @@ model Job {
   start_date DateTime
   end_date  DateTime
   address String?
-  description String
-  keywords String
+  description String?
+  keywords String?
 }
