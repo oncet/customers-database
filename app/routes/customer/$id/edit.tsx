@@ -48,13 +48,16 @@ export const meta: MetaFunction = ({ data }) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
 
-  const name = formData.get("name");
+  const name = formData.get("name") as string;
 
-  // db.customer.create({
-  //   data: {
-  //     name: name,
-  //   },
-  // });
+  await db.customer.update({
+    where: {
+      id: Number(params.id),
+    },
+    data: {
+      name,
+    },
+  });
 
   return redirect("/customer/" + params.id);
 };
