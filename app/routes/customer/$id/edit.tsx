@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
@@ -62,7 +61,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export default function EditCustomer() {
   const { id, name, jobs } = useLoaderData<CustomerWithJobs>();
-  const [nameValue, setNameValue] = useState(name);
 
   return (
     <Stack>
@@ -78,7 +76,7 @@ export default function EditCustomer() {
       <Title>Edit customer</Title>
       <Form method="put">
         <Stack>
-          <TextInput label="Name" name="name" defaultValue={nameValue} />
+          <TextInput label="Name" name="name" defaultValue={name} />
           <Button type="submit">Update customer</Button>
         </Stack>
       </Form>
