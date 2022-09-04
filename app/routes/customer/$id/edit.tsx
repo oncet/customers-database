@@ -51,7 +51,11 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const name = formData.get("name");
 
-  // await createPost({ title, slug, markdown });
+  // db.customer.create({
+  //   data: {
+  //     name: name,
+  //   },
+  // });
 
   return redirect("/customer/" + params.id);
 };
@@ -59,10 +63,6 @@ export const action: ActionFunction = async ({ request, params }) => {
 export default function EditCustomer() {
   const { id, name, jobs } = useLoaderData<CustomerWithJobs>();
   const [nameValue, setNameValue] = useState(name);
-
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNameValue(event.target.value);
-  };
 
   return (
     <Stack>
@@ -78,12 +78,7 @@ export default function EditCustomer() {
       <Title>Edit customer</Title>
       <Form method="put">
         <Stack>
-          <TextInput
-            label="Name"
-            name="name"
-            value={nameValue}
-            onChange={handleOnChange}
-          />
+          <TextInput label="Name" name="name" defaultValue={nameValue} />
           <Button type="submit">Update customer</Button>
         </Stack>
       </Form>
