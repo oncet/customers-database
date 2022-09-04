@@ -1,6 +1,6 @@
 import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import { Form, useLoaderData } from "@remix-run/react";
 import type { Prisma } from "@prisma/client";
 import type { ActionFunction } from "@remix-run/node";
 import { Title, List, Stack, Breadcrumbs } from "@mantine/core";
