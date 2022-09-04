@@ -5,6 +5,7 @@
     "build": "remix build",
     "deploy": "fly deploy --remote-only",
     "db:reset": "prisma migrate reset --force",
+    "db:dev": "prisma migrate dev",
     "dev": "remix dev",
     "start": "remix-serve build"
   },
