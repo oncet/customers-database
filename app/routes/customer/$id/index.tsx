@@ -2,7 +2,7 @@ import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import type { Prisma } from "@prisma/client";
-import { Title, List, Stack, Breadcrumbs } from "@mantine/core";
+import { Title, List, Stack, Breadcrumbs, Group, Button } from "@mantine/core";
 
 import { db } from "~/utils/db.server";
 import { Anchor } from "@mantine/core";
@@ -45,6 +45,11 @@ export default function Customer() {
     <Stack>
       <Breadcrumbs>{["Customer", name]}</Breadcrumbs>
       <Title>{name}</Title>
+      <Group>
+        <Anchor component={Link} to="edit" variant="gradient">
+          Edit customer
+        </Anchor>
+      </Group>
       {jobs && (
         <>
           <Title order={2}>Jobs</Title>
