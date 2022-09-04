@@ -14,10 +14,10 @@ model Customer {
   id   Int    @id @default(autoincrement())
   first_name String
   last_name String
-  address String
-  tel String
-  cel String
-  email String
+  address String?
+  tel String?
+  cel String?
+  email String @unique
   jobs Job[]
 }
 
@@ -28,6 +28,7 @@ model Job {
   customerId Int
   start_date DateTime
   end_date  DateTime
+  address String?
   description String
   keywords String
 }

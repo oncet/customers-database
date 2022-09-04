@@ -16,10 +16,20 @@ async function main() {
   for (let i = 0; i < 10; i++) {
     const customer = await prisma.customer.create({
       data: {
-        name: faker.name.fullName(),
+        first_name: faker.name.firstName(),
+        last_name: faker.name.lastName(),
+        address: `${faker.address.streetAddress(true)}`,
+        tel: faker.phone.number(),
+        cel: faker.phone.number(),
+        email: faker.internet.email(),
         jobs: {
           create: Array.from({ length: getRandomInt(1, 5) }, () => ({
             name: capitalizeFirstLetter(faker.lorem.words()),
+            // customerId: 1,
+            start_date: faker.date.recent(10),
+            end_date: faker.date.future(5),
+            address: faker.address.streetAddress(true),
+            description: faker.lorem.paragraph()
           })),
         },
       },
