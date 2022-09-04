@@ -70,7 +70,7 @@ export default function EditCustomer() {
       <Breadcrumbs>
         {[
           "Customer",
-          <Anchor component={Link} to={"/customer/" + id}>
+          <Anchor key="customerLink" component={Link} to={"/customer/" + id}>
             {name}
           </Anchor>,
           "Edit",
