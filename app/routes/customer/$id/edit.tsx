@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
 import { json } from "@remix-run/node";
 import { Form, Link, useLoaderData } from "@remix-run/react";
@@ -49,20 +48,22 @@ export const meta: MetaFunction = ({ data }) => {
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
 
-  const name = formData.get("name");
+  const name = formData.get("name") as string;
 
-  // await createPost({ title, slug, markdown });
+  await db.customer.update({
+    where: {
+      id: Number(params.id),
+    },
+    data: {
+      name,
+    },
+  });
 
   return redirect("/customer/" + params.id);
 };
 
 export default function EditCustomer() {
   const { id, name, jobs } = useLoaderData<CustomerWithJobs>();
-  const [nameValue, setNameValue] = useState(name);
-
-  const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setNameValue(event.target.value);
-  };
 
   return (
     <Stack>
@@ -78,12 +79,7 @@ export default function EditCustomer() {
       <Title>Edit customer</Title>
       <Form method="put">
         <Stack>
-          <TextInput
-            label="Name"
-            name="name"
-            value={nameValue}
-            onChange={handleOnChange}
-          />
+          <TextInput label="Name" name="name" defaultValue={name} />
           <Button type="submit">Update customer</Button>
         </Stack>
       </Form>
