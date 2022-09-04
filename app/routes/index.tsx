@@ -31,7 +31,7 @@ export default function Index() {
           {customers.map((customer) => (
             <List.Item key={customer.id}>
               <Anchor component={Link} to={"customer/" + customer.id}>
-                {customer.name}
+                {customer.firstName + " " + customer.lastName}
               </Anchor>
             </List.Item>
           ))}

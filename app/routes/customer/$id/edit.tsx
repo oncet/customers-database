@@ -41,21 +41,25 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export const meta: MetaFunction = ({ data }) => {
   return {
-    title: data ? data.name + " - Edit customer" : "Customer not found",
+    title: data
+      ? data.firstName + " " + data.lastName + " - Edit customer"
+      : "Customer not found",
   };
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
   const formData = await request.formData();
 
-  const name = formData.get("name") as string;
+  const firstName = formData.get("firstName") as string;
+  const lastName = formData.get("lastName") as string;
 
   await db.customer.update({
     where: {
       id: Number(params.id),
     },
     data: {
-      name,
+      firstName,
+      lastName,
     },
   });
 
@@ -63,15 +67,15 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function EditCustomer() {
-  const { id, name, jobs } = useLoaderData<CustomerWithJobs>();
+  const { id, firstName, lastName, jobs } = useLoaderData<CustomerWithJobs>();
 
   return (
     <Stack>
       <Breadcrumbs>
         {[
           "Customer",
-          <Anchor key="customerLink" component={Link} to={"/customer/" + id}>
-            {name}
+          <Anchor key="customerName" component={Link} to={"/customer/" + id}>
+            {firstName + " " + lastName}
           </Anchor>,
           "Edit",
         ]}
@@ -79,7 +83,16 @@ export default function EditCustomer() {
       <Title>Edit customer</Title>
       <Form method="put">
         <Stack>
-          <TextInput label="Name" name="name" defaultValue={name} />
+          <TextInput
+            label="First name"
+            name="firstName"
+            defaultValue={firstName}
+          />
+          <TextInput
+            label="Last name"
+            name="lastName"
+            defaultValue={lastName}
+          />
           <Button type="submit">Update customer</Button>
         </Stack>
       </Form>

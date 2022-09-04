@@ -34,17 +34,19 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export const meta: MetaFunction = ({ data }) => {
   return {
-    title: data ? data.name + " - Customer" : "Customer not found",
+    title: data
+      ? data.firstName + " " + data.lastName + " - Customer"
+      : "Customer not found",
   };
 };
 
 export default function Customer() {
-  const { name, jobs } = useLoaderData<CustomerWithJobs>();
+  const { firstName, lastName, jobs } = useLoaderData<CustomerWithJobs>();
 
   return (
     <Stack>
-      <Breadcrumbs>{["Customer", name]}</Breadcrumbs>
-      <Title>{name}</Title>
+      <Breadcrumbs>{["Customer", firstName + " " + lastName]}</Breadcrumbs>
+      <Title>{firstName + " " + lastName}</Title>
       <Group>
         <Anchor component={Link} to="edit" variant="gradient">
           Edit customer
