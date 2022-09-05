@@ -2,7 +2,7 @@ import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import type { Prisma } from "@prisma/client";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { Anchor, Stack, Title, Text, Breadcrumbs, List } from "@mantine/core";
+import { Anchor, Stack, Title, Text, Breadcrumbs } from "@mantine/core";
 
 import { db } from "~/utils/db.server";
 
