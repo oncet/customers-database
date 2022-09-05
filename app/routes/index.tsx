@@ -1,4 +1,12 @@
-import { Anchor, Group, List, Stack, Text, Title } from "@mantine/core";
+import {
+  Anchor,
+  Breadcrumbs,
+  Group,
+  List,
+  Stack,
+  Text,
+  Title,
+} from "@mantine/core";
 import type { Customer } from "@prisma/client";
 import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
@@ -25,6 +33,13 @@ export default function Index() {
 
   return (
     <Stack>
+      <Breadcrumbs>
+        {[
+          <Anchor key="viewCustomers" component={Link} to="/">
+            Customers
+          </Anchor>,
+        ]}
+      </Breadcrumbs>
       <Title>Customers</Title>
       <Group>
         <Anchor component={Link} to="customers/add">

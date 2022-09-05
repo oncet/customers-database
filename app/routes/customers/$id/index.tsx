@@ -47,7 +47,9 @@ export default function Customer() {
     <Stack>
       <Breadcrumbs>
         {[
-          "Customers",
+          <Anchor key="viewCustomers" component={Link} to="/">
+            Customers
+          </Anchor>,
           <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>
             {firstName + " " + lastName}
           </Anchor>,
@@ -65,7 +67,7 @@ export default function Customer() {
           <List>
             {jobs.map((job) => (
               <List.Item key={job.id}>
-                <Anchor component={Link} to={"/job/" + job.id}>
+                <Anchor component={Link} to={"jobs/" + job.id}>
                   {job.name}
                 </Anchor>
               </List.Item>

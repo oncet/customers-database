@@ -38,7 +38,7 @@ export default function App() {
               <Header height={60} p="xs">
                 <Group sx={{ height: "100%" }}>
                   <Anchor component={Link} to="/">
-                    Customers database
+                    Customers DB
                   </Anchor>
                 </Group>
               </Header>

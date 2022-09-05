@@ -43,8 +43,10 @@ export default function AddCustomer() {
     <Stack>
       <Breadcrumbs>
         {[
-          "Customers",
-          <Anchor key="customerAdd" component={Link} to="/customers/add">
+          <Anchor key="viewCustomers" component={Link} to="/">
+            Customers
+          </Anchor>,
+          <Anchor key="addCustomer" component={Link} to="/customers/add">
             Add new
           </Anchor>,
         ]}

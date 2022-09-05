@@ -73,11 +73,17 @@ export default function EditCustomer() {
     <Stack>
       <Breadcrumbs>
         {[
-          "Customers",
+          <Anchor key="viewCustomers" component={Link} to="/">
+            Customers
+          </Anchor>,
           <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>
             {firstName + " " + lastName}
           </Anchor>,
-          <Anchor key="viewCustomer" component={Link} to="edit">
+          <Anchor
+            key="editCustomer"
+            component={Link}
+            to={"/customers/" + id + "/edit"}
+          >
             Edit
           </Anchor>,
         ]}
