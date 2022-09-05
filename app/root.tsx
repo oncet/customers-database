@@ -17,6 +17,8 @@ import {
 } from "@mantine/core";
 import { StylesPlaceholder } from "@mantine/remix";
 
+import { theme } from "~/theme";
+
 export const meta: MetaFunction = () => ({
   charset: "utf-8",
   title: "New Remix App",
@@ -25,7 +27,7 @@ export const meta: MetaFunction = () => ({
 
 export default function App() {
   return (
-    <MantineProvider withGlobalStyles withNormalizeCSS>
+    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
       <html lang="en">
         <head>
           <Meta />
