@@ -33,7 +33,7 @@ export const action: ActionFunction = async ({ request }) => {
   //   },
   // });
 
-  // return redirect("/customer/" + params.id);
+  // return redirect("/customers/" + params.id);
 
   return null;
 };
@@ -44,7 +44,7 @@ export default function AddCustomer() {
       <Breadcrumbs>
         {[
           "Customers",
-          <Anchor key="customerAdd" component={Link} to="/customer/add">
+          <Anchor key="customerAdd" component={Link} to="/customers/add">
             Add new
           </Anchor>,
         ]}

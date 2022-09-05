@@ -46,8 +46,8 @@ export default function Job() {
       <Title>{name}</Title>
       <Title order={2}>Customer</Title>
       <Text>
-        <Anchor component={Link} to={"/customer/" + Customer.id}>
-          {Customer.name}
+        <Anchor component={Link} to={"/customers/" + Customer.id}>
+          {Customer.firstName + " " + Customer.lastName}
         </Anchor>
       </Text>
     </Stack>

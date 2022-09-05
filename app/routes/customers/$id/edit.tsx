@@ -63,7 +63,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     },
   });
 
-  return redirect("/customer/" + params.id);
+  return redirect("/customers/" + params.id);
 };
 
 export default function EditCustomer() {
@@ -73,14 +73,16 @@ export default function EditCustomer() {
     <Stack>
       <Breadcrumbs>
         {[
-          "Customer",
-          <Anchor key="customerName" component={Link} to={"/customer/" + id}>
+          "Customers",
+          <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>
             {firstName + " " + lastName}
           </Anchor>,
-          "Edit",
+          <Anchor key="viewCustomer" component={Link} to="edit">
+            Edit
+          </Anchor>,
         ]}
       </Breadcrumbs>
-      <Title>Edit customer</Title>
+      <Title>Edit customer #{id}</Title>
       <Form method="put">
         <Stack>
           <TextInput

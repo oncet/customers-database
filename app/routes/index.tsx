@@ -27,7 +27,7 @@ export default function Index() {
     <Stack>
       <Title>Customers</Title>
       <Group>
-        <Anchor component={Link} to="customer/add">
+        <Anchor component={Link} to="customers/add">
           Add new customer
         </Anchor>
       </Group>
@@ -35,7 +35,7 @@ export default function Index() {
         <List>
           {customers.map((customer) => (
             <List.Item key={customer.id}>
-              <Anchor component={Link} to={"customer/" + customer.id}>
+              <Anchor component={Link} to={"customers/" + customer.id}>
                 {customer.firstName + " " + customer.lastName}
               </Anchor>
             </List.Item>

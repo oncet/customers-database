@@ -41,14 +41,21 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export default function Customer() {
-  const { firstName, lastName, jobs } = useLoaderData<CustomerWithJobs>();
+  const { id, firstName, lastName, jobs } = useLoaderData<CustomerWithJobs>();
 
   return (
     <Stack>
-      <Breadcrumbs>{["Customer", firstName + " " + lastName]}</Breadcrumbs>
+      <Breadcrumbs>
+        {[
+          "Customers",
+          <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>
+            {firstName + " " + lastName}
+          </Anchor>,
+        ]}
+      </Breadcrumbs>
       <Title>{firstName + " " + lastName}</Title>
       <Group>
-        <Anchor component={Link} to="edit" variant="gradient">
+        <Anchor component={Link} to="edit">
           Edit customer
         </Anchor>
       </Group>
