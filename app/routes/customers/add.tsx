@@ -19,22 +19,22 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const action: ActionFunction = async ({ request }) => {
-  // const formData = await request.formData();
+export const action: ActionFunction = async ({ request, params }) => {
+  const formData = await request.formData();
 
-  // const firstName = formData.get("firstName") as string;
-  // const lastName = formData.get("lastName") as string;
+  const firstName = formData.get("firstName") as string;
+  const lastName = formData.get("lastName") as string;
+  const email = formData.get("email") as string;
 
-  // await db.customer.create({
-  //   data: {
-  //     firstName,
-  //     lastName,
-  //   },
-  // });
+  const customer = await db.customer.create({
+    data: {
+      firstName,
+      lastName,
+      email,
+    },
+  });
 
-  // return redirect("/customers/" + params.id);
-
-  return null;
+  return redirect("/customers/" + customer.id);
 };
 
 export default function AddCustomer() {
@@ -58,6 +58,7 @@ export default function AddCustomer() {
         <Stack>
           <TextInput label="First name" name="firstName" />
           <TextInput label="Last name" name="lastName" />
+          <TextInput label="E-mail address" name="email" />
           <Button type="submit">Add new customer</Button>
         </Stack>
       </Form>
