@@ -1,8 +1,8 @@
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { Prisma } from "@prisma/client";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import { Anchor, Stack, Title, Text, Breadcrumbs, List } from "@mantine/core";
-import type { Prisma } from "@prisma/client";
 
 import { db } from "~/utils/db.server";
 
@@ -42,9 +42,12 @@ export default function Job() {
 
   return (
     <Stack>
-      <Breadcrumbs>
+      <Breadcrumbs sx={{ flexWrap: "wrap" }}>
         {[
-          <Anchor key="viewCustomers" component={Link} to="/">
+          <Anchor key="home" component={Link} to="/">
+            Home
+          </Anchor>,
+          <Anchor key="viewCustomers" component={Link} to="/customers">
             Customers
           </Anchor>,
           <Anchor

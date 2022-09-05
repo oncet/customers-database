@@ -1,11 +1,10 @@
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
+import type { Prisma } from "@prisma/client";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import type { Prisma } from "@prisma/client";
-import { Title, List, Stack, Breadcrumbs, Group } from "@mantine/core";
+import { Anchor, Title, List, Stack, Breadcrumbs, Group } from "@mantine/core";
 
 import { db } from "~/utils/db.server";
-import { Anchor } from "@mantine/core";
 
 type CustomerWithJobs = Prisma.CustomerGetPayload<{
   include: {
@@ -47,7 +46,10 @@ export default function Customer() {
     <Stack>
       <Breadcrumbs>
         {[
-          <Anchor key="viewCustomers" component={Link} to="/">
+          <Anchor key="home" component={Link} to="/">
+            Home
+          </Anchor>,
+          <Anchor key="viewCustomers" component={Link} to="/customers">
             Customers
           </Anchor>,
           <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>

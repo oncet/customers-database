@@ -1,10 +1,3 @@
-import {
-  MantineProvider,
-  AppShell,
-  Header,
-  Anchor,
-  Group,
-} from "@mantine/core";
 import type { MetaFunction } from "@remix-run/node";
 import {
   Link,
@@ -15,6 +8,13 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import {
+  MantineProvider,
+  AppShell,
+  Header,
+  Anchor,
+  Group,
+} from "@mantine/core";
 import { StylesPlaceholder } from "@mantine/remix";
 
 export const meta: MetaFunction = () => ({
@@ -38,7 +38,7 @@ export default function App() {
               <Header height={60} p="xs">
                 <Group sx={{ height: "100%" }}>
                   <Anchor component={Link} to="/">
-                    Customers DB
+                    CDB
                   </Anchor>
                 </Group>
               </Header>

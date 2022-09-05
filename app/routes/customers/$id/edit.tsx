@@ -1,8 +1,11 @@
-import { LoaderFunction, MetaFunction, redirect } from "@remix-run/node";
-import { json } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import type {
+  ActionFunction,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import type { Prisma } from "@prisma/client";
-import type { ActionFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
+import { Form, Link, useLoaderData } from "@remix-run/react";
 import {
   Anchor,
   Title,
@@ -73,7 +76,10 @@ export default function EditCustomer() {
     <Stack>
       <Breadcrumbs>
         {[
-          <Anchor key="viewCustomers" component={Link} to="/">
+          <Anchor key="home" component={Link} to="/">
+            Home
+          </Anchor>,
+          <Anchor key="viewCustomers" component={Link} to="/customers">
             Customers
           </Anchor>,
           <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>
