@@ -52,12 +52,7 @@ export default function Customer() {
           <Anchor key="viewCustomers" component={Link} to="/customers">
             Customers
           </Anchor>,
-          <Anchor
-            key="viewCustomer"
-            component={Link}
-            to={"/customers/" + id}
-            underline
-          >
+          <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>
             {firstName + " " + lastName}
           </Anchor>,
         ]}

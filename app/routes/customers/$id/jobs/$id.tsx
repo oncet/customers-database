@@ -62,7 +62,6 @@ export default function Job() {
             key="viewJob"
             component={Link}
             to={"/customers/" + Customer.id + "/jobs/" + id}
-            underline
           >
             {name}
           </Anchor>,

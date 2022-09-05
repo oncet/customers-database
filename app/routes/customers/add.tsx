@@ -48,12 +48,7 @@ export default function AddCustomer() {
           <Anchor key="viewCustomers" component={Link} to="/customers">
             Customers
           </Anchor>,
-          <Anchor
-            key="addCustomer"
-            component={Link}
-            to="/customers/add"
-            underline
-          >
+          <Anchor key="addCustomer" component={Link} to="/customers/add">
             Add new
           </Anchor>,
         ]}

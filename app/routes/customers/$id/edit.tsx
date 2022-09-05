@@ -89,7 +89,6 @@ export default function EditCustomer() {
             key="editCustomer"
             component={Link}
             to={"/customers/" + id + "/edit"}
-            underline
           >
             Edit
           </Anchor>,
