@@ -40,7 +40,12 @@ export default function Index() {
           <Anchor key="home" component={Link} to="/">
             Home
           </Anchor>,
-          <Anchor key="viewCustomers" component={Link} to="/customers">
+          <Anchor
+            key="viewCustomers"
+            component={Link}
+            to="/customers"
+            underline
+          >
             Customers
           </Anchor>,
         ]}

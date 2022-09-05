@@ -13,7 +13,7 @@ export default function Index() {
     <Stack>
       <Breadcrumbs>
         {[
-          <Anchor key="home" component={Link} to="/">
+          <Anchor key="home" component={Link} to="/" underline>
             Home
           </Anchor>,
         ]}

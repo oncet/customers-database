@@ -42,7 +42,7 @@ export default function Job() {
 
   return (
     <Stack>
-      <Breadcrumbs sx={{ flexWrap: "wrap" }}>
+      <Breadcrumbs>
         {[
           <Anchor key="home" component={Link} to="/">
             Home
@@ -62,6 +62,7 @@ export default function Job() {
             key="viewJob"
             component={Link}
             to={"/customers/" + Customer.id + "/jobs/" + id}
+            underline
           >
             {name}
           </Anchor>,
