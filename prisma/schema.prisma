@@ -12,7 +12,12 @@ datasource db {
 
 model Customer {
   id   Int    @id @default(autoincrement())
-  name String
+  firstName String
+  lastName String
+  address String?
+  telephone String?
+  cellphone String?
+  email String @unique
   jobs Job[]
 }
 
@@ -21,4 +26,9 @@ model Job {
   name       String
   Customer   Customer @relation(fields: [customerId], references: [id])
   customerId Int
+  startDate DateTime
+  endDate  DateTime
+  address String?
+  description String?
+  keywords String?
 }

@@ -1,43 +1,31 @@
-import { Anchor, List, Stack, Text, Title } from "@mantine/core";
-import type { Customer } from "@prisma/client";
-import { json, LoaderFunction, MetaFunction } from "@remix-run/node";
-import { Link, useLoaderData } from "@remix-run/react";
-import { db } from "~/utils/db.server";
-
-type LoaderData = { customers: Array<Customer> };
-
-export const loader: LoaderFunction = async () => {
-  const data = {
-    customers: await db.customer.findMany(),
-  };
-
-  return json(data);
-};
+import type { MetaFunction } from "@remix-run/node";
+import { Link } from "@remix-run/react";
+import { Anchor, Breadcrumbs, Stack, Text, Title } from "@mantine/core";
 
 export const meta: MetaFunction = () => {
   return {
-    title: "Customers database",
+    title: "Homepage - Customers database",
   };
 };
 
 export default function Index() {
-  const { customers } = useLoaderData<LoaderData>();
-
   return (
     <Stack>
-      <Title>Customers</Title>
-      {!!customers.length && (
-        <List>
-          {customers.map((customer) => (
-            <List.Item key={customer.id}>
-              <Anchor component={Link} to={"customer/" + customer.id}>
-                {customer.name}
-              </Anchor>
-            </List.Item>
-          ))}
-        </List>
-      )}
-      {!customers.length && <Text>No customers found :(</Text>}
+      <Breadcrumbs>
+        {[
+          <Anchor key="home" component={Link} to="/" underline>
+            Home
+          </Anchor>,
+        ]}
+      </Breadcrumbs>
+      <Title>Welcome!</Title>
+      <Text>
+        Head to{" "}
+        <Anchor component={Link} to="customers">
+          customers
+        </Anchor>
+        .
+      </Text>
     </Stack>
   );
 }
