@@ -14,6 +14,7 @@ import {
   Header,
   Anchor,
   Group,
+  Container,
 } from "@mantine/core";
 import { StylesPlaceholder } from "@mantine/remix";
 
@@ -38,15 +39,19 @@ export default function App() {
           <AppShell
             header={
               <Header height={60} p="xs">
-                <Group sx={{ height: "100%" }}>
-                  <Anchor component={Link} to="/">
-                    CDB
-                  </Anchor>
-                </Group>
+                <Container>
+                  <Group sx={{ height: "100%" }}>
+                    <Anchor component={Link} to="/">
+                      CDB
+                    </Anchor>
+                  </Group>
+                </Container>
               </Header>
             }
           >
-            <Outlet />
+            <Container>
+              <Outlet />
+            </Container>
             <ScrollRestoration />
             <Scripts />
             <LiveReload />
