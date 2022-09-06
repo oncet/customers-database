@@ -11,24 +11,24 @@ datasource db {
 }
 
 model Customer {
-  id   Int    @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   firstName String
-  lastName String
-  address String?
+  lastName  String
+  address   String?
   telephone String?
   cellphone String?
-  email String @unique
-  jobs Job[]
+  email     String  @unique
+  jobs      Job[]
 }
 
 model Job {
-  id         Int      @id @default(autoincrement())
-  name       String
-  Customer   Customer @relation(fields: [customerId], references: [id])
-  customerId Int
-  startDate DateTime
-  endDate  DateTime
-  address String?
+  id          Int      @id @default(autoincrement())
+  name        String
+  Customer    Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerId  Int
+  startDate   DateTime
+  endDate     DateTime
+  address     String?
   description String?
-  keywords String?
+  keywords    String?
 }

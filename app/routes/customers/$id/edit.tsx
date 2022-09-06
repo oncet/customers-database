@@ -51,6 +51,16 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
+  if (request.method === "DELETE") {
+    await db.customer.delete({
+      where: {
+        id: Number(params.id),
+      },
+    });
+
+    return redirect("/customers/");
+  }
+
   const formData = await request.formData();
 
   const firstName = formData.get("firstName") as string;
@@ -108,6 +118,13 @@ export default function EditCustomer() {
             defaultValue={lastName}
           />
           <Button type="submit">Update customer</Button>
+        </Stack>
+      </Form>
+      <Form method="delete">
+        <Stack>
+          <Button type="submit" color="red">
+            Delete customer
+          </Button>
         </Stack>
       </Form>
     </Stack>
