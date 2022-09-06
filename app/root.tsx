@@ -38,8 +38,8 @@ export default function App() {
         <body>
           <AppShell
             header={
-              <Header height={60} p="xs">
-                <Container>
+              <Header height={60}>
+                <Container sx={{ height: "100%" }}>
                   <Group sx={{ height: "100%" }}>
                     <Anchor component={Link} to="/">
                       CDB
@@ -48,6 +48,12 @@ export default function App() {
                 </Container>
               </Header>
             }
+            styles={{
+              main: {
+                paddingLeft: 0,
+                paddingRight: 0,
+              },
+            }}
           >
             <Container>
               <Outlet />
