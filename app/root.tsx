@@ -28,7 +28,12 @@ export const meta: MetaFunction = () => ({
 
 export default function App() {
   return (
-    <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
+    <MantineProvider
+      theme={theme}
+      theme={{ colorScheme: "dark" }}
+      withGlobalStyles
+      withNormalizeCSS
+    >
       <html lang="en">
         <head>
           <Meta />
