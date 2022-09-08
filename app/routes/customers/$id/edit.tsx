@@ -13,9 +13,12 @@ import {
   Breadcrumbs,
   TextInput,
   Button,
+  Modal,
+  Text,
 } from "@mantine/core";
 
 import { db } from "~/utils/db.server";
+import { useState } from "react";
 
 type CustomerWithJobs = Prisma.CustomerGetPayload<{
   include: {
@@ -85,52 +88,84 @@ export default function EditCustomer() {
   const { id, firstName, lastName, email, jobs } =
     useLoaderData<CustomerWithJobs>();
 
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+
   return (
-    <Stack>
-      <Breadcrumbs>
-        {[
-          <Anchor key="home" component={Link} to="/">
-            Home
-          </Anchor>,
-          <Anchor key="viewCustomers" component={Link} to="/customers">
-            Customers
-          </Anchor>,
-          <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>
-            {firstName + " " + lastName}
-          </Anchor>,
-          <Anchor
-            key="editCustomer"
-            component={Link}
-            to={"/customers/" + id + "/edit"}
-          >
-            Edit
-          </Anchor>,
-        ]}
-      </Breadcrumbs>
-      <Title>Edit customer #{id}</Title>
-      <Form method="put">
+    <>
+      <Stack>
+        <Breadcrumbs>
+          {[
+            <Anchor key="home" component={Link} to="/">
+              Home
+            </Anchor>,
+            <Anchor key="viewCustomers" component={Link} to="/customers">
+              Customers
+            </Anchor>,
+            <Anchor key="viewCustomer" component={Link} to={"/customers/" + id}>
+              {firstName + " " + lastName}
+            </Anchor>,
+            <Anchor
+              key="editCustomer"
+              component={Link}
+              to={"/customers/" + id + "/edit"}
+            >
+              Edit
+            </Anchor>,
+          ]}
+        </Breadcrumbs>
+        <Title>Edit customer #{id}</Title>
+        <Form method="put">
+          <Stack>
+            <TextInput
+              label="First name"
+              name="firstName"
+              defaultValue={firstName}
+            />
+            <TextInput
+              label="Last name"
+              name="lastName"
+              defaultValue={lastName}
+            />
+            <TextInput
+              label="E-mail address"
+              name="email"
+              defaultValue={email}
+            />
+            <Button type="submit">Update customer</Button>
+          </Stack>
+        </Form>
+        <Button
+          color="red"
+          onClick={() => {
+            setIsDeleteDialogOpen(true);
+          }}
+        >
+          Delete customer
+        </Button>
+      </Stack>
+      <Modal
+        centered
+        opened={isDeleteDialogOpen}
+        withCloseButton={false}
+        onClose={() => {
+          setIsDeleteDialogOpen(false);
+        }}
+      >
         <Stack>
-          <TextInput
-            label="First name"
-            name="firstName"
-            defaultValue={firstName}
-          />
-          <TextInput
-            label="Last name"
-            name="lastName"
-            defaultValue={lastName}
-          />
-          <TextInput label="E-mail address" name="email" defaultValue={email} />
-          <Button type="submit">Update customer</Button>
+          <Text>
+            Are you sure you want to delete {firstName + " " + lastName}?
+          </Text>
+          <Text weight="bold">This action can't be undone. </Text>
+          <Form method="delete">
+            <Stack>
+              <Button type="submit" color="red">
+                Delete customer
+              </Button>
+              <Button>Cancel</Button>
+            </Stack>
+          </Form>
         </Stack>
-      </Form>
-      <Form method="delete">
-        <Stack>
-          <Button type="submit" color="red">
-            Delete customer
-          </Button>
-        </Stack>
-      </Form>
-    </Stack>
+      </Modal>
+    </>
   );
 }
