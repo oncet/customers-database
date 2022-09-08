@@ -38,7 +38,7 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export default function Job() {
-  const { id, name, Customer } = useLoaderData<JobWithCustomer>();
+  const { id, name, description, Customer } = useLoaderData<JobWithCustomer>();
 
   return (
     <Stack>
@@ -68,6 +68,7 @@ export default function Job() {
         ]}
       </Breadcrumbs>
       <Title>{name}</Title>
+      {description}
       <Title order={2}>Customer</Title>
       <Text>
         <Anchor component={Link} to={"/customers/" + Customer.id}>
