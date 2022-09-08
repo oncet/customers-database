@@ -65,6 +65,7 @@ export const action: ActionFunction = async ({ request, params }) => {
 
   const firstName = formData.get("firstName") as string;
   const lastName = formData.get("lastName") as string;
+  const email = formData.get("email") as string;
 
   await db.customer.update({
     where: {
@@ -73,6 +74,7 @@ export const action: ActionFunction = async ({ request, params }) => {
     data: {
       firstName,
       lastName,
+      email,
     },
   });
 
@@ -80,7 +82,8 @@ export const action: ActionFunction = async ({ request, params }) => {
 };
 
 export default function EditCustomer() {
-  const { id, firstName, lastName, jobs } = useLoaderData<CustomerWithJobs>();
+  const { id, firstName, lastName, email, jobs } =
+    useLoaderData<CustomerWithJobs>();
 
   return (
     <Stack>
@@ -117,6 +120,7 @@ export default function EditCustomer() {
             name="lastName"
             defaultValue={lastName}
           />
+          <TextInput label="E-mail address" name="email" defaultValue={email} />
           <Button type="submit">Update customer</Button>
         </Stack>
       </Form>
