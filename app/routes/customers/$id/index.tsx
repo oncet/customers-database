@@ -2,7 +2,15 @@ import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import type { Prisma } from "@prisma/client";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
-import { Anchor, Title, List, Stack, Breadcrumbs, Group } from "@mantine/core";
+import {
+  Anchor,
+  Text,
+  Title,
+  List,
+  Stack,
+  Breadcrumbs,
+  Group,
+} from "@mantine/core";
 
 import { db } from "~/utils/db.server";
 
@@ -63,20 +71,19 @@ export default function Customer() {
           Edit customer
         </Anchor>
       </Group>
-      {jobs && (
-        <>
-          <Title order={2}>Jobs</Title>
-          <List>
-            {jobs.map((job) => (
-              <List.Item key={job.id}>
-                <Anchor component={Link} to={"jobs/" + job.id}>
-                  {job.name}
-                </Anchor>
-              </List.Item>
-            ))}
-          </List>
-        </>
+      <Title order={2}>Jobs</Title>
+      {!!jobs.length && (
+        <List>
+          {jobs.map((job) => (
+            <List.Item key={job.id}>
+              <Anchor component={Link} to={"jobs/" + job.id}>
+                {job.name}
+              </Anchor>
+            </List.Item>
+          ))}
+        </List>
       )}
+      {!jobs.length && <Text>This customer has no jobs.</Text>}
     </Stack>
   );
 }
