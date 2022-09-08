@@ -90,6 +90,14 @@ export default function EditCustomer() {
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
+  const openDeleteDiaog = () => {
+    setIsDeleteDialogOpen(true);
+  };
+
+  const closeDeleteDialog = () => {
+    setIsDeleteDialogOpen(false);
+  };
+
   return (
     <>
       <Stack>
@@ -134,12 +142,7 @@ export default function EditCustomer() {
             <Button type="submit">Update customer</Button>
           </Stack>
         </Form>
-        <Button
-          color="red"
-          onClick={() => {
-            setIsDeleteDialogOpen(true);
-          }}
-        >
+        <Button color="red" onClick={openDeleteDiaog}>
           Delete customer
         </Button>
       </Stack>
@@ -147,9 +150,7 @@ export default function EditCustomer() {
         centered
         opened={isDeleteDialogOpen}
         withCloseButton={false}
-        onClose={() => {
-          setIsDeleteDialogOpen(false);
-        }}
+        onClose={closeDeleteDialog}
       >
         <Stack>
           <Text>
@@ -161,7 +162,7 @@ export default function EditCustomer() {
               <Button type="submit" color="red">
                 Delete customer
               </Button>
-              <Button>Cancel</Button>
+              <Button onClick={closeDeleteDialog}>Cancel</Button>
             </Stack>
           </Form>
         </Stack>
