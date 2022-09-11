@@ -1,5 +1,6 @@
 import type { LoaderFunction, MetaFunction } from "@remix-run/node";
 import type { Prisma } from "@prisma/client";
+import { useEffect } from "react";
 import { json } from "@remix-run/node";
 import { Link, useLoaderData } from "@remix-run/react";
 import {
@@ -11,16 +12,20 @@ import {
   Breadcrumbs,
   Group,
 } from "@mantine/core";
+import { showNotification } from "@mantine/notifications";
 
 import { db } from "~/utils/db.server";
+import { commitSession, getSession } from "~/sessions";
 
 type CustomerWithJobs = Prisma.CustomerGetPayload<{
   include: {
     jobs: true;
   };
-}>;
+}> & {
+  customerUpdated: true | undefined;
+};
 
-export const loader: LoaderFunction = async ({ params }) => {
+export const loader: LoaderFunction = async ({ request, params }) => {
   const customer = await db.customer.findFirst({
     where: {
       id: Number(params.id),
@@ -36,7 +41,18 @@ export const loader: LoaderFunction = async ({ params }) => {
     });
   }
 
-  return json(customer);
+  const session = await getSession(request.headers.get("Cookie"));
+
+  const customerUpdated = session.get("customerUpdated");
+
+  return json(
+    { ...customer, customerUpdated },
+    {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    }
+  );
 };
 
 export const meta: MetaFunction = ({ data }) => {
@@ -48,7 +64,17 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export default function Customer() {
-  const { id, firstName, lastName, jobs } = useLoaderData<CustomerWithJobs>();
+  const { id, firstName, lastName, jobs, customerUpdated } =
+    useLoaderData<CustomerWithJobs>();
+
+  useEffect(() => {
+    if (!customerUpdated) return;
+
+    showNotification({
+      message: "Customer updated!",
+      color: "teal",
+    });
+  }, [customerUpdated]);
 
   return (
     <Stack>

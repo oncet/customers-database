@@ -19,6 +19,7 @@ import {
 
 import { db } from "~/utils/db.server";
 import { useState } from "react";
+import { commitSession, getSession } from "~/sessions";
 
 type CustomerWithJobs = Prisma.CustomerGetPayload<{
   include: {
@@ -54,6 +55,8 @@ export const meta: MetaFunction = ({ data }) => {
 };
 
 export const action: ActionFunction = async ({ request, params }) => {
+  const session = await getSession(request.headers.get("Cookie"));
+
   if (request.method === "DELETE") {
     await db.customer.delete({
       where: {
@@ -61,7 +64,13 @@ export const action: ActionFunction = async ({ request, params }) => {
       },
     });
 
-    return redirect("/customers/");
+    session.flash("customerDeleted", true);
+
+    return redirect("/customers/", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
   }
 
   const formData = await request.formData();
@@ -81,7 +90,13 @@ export const action: ActionFunction = async ({ request, params }) => {
     },
   });
 
-  return redirect("/customers/" + params.id);
+  session.flash("customerUpdated", true);
+
+  return redirect("/customers/" + params.id, {
+    headers: {
+      "Set-Cookie": await commitSession(session),
+    },
+  });
 };
 
 export default function EditCustomer() {

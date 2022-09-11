@@ -16,6 +16,7 @@ import {
   Group,
   Container,
 } from "@mantine/core";
+import { NotificationsProvider } from "@mantine/notifications";
 import { StylesPlaceholder } from "@mantine/remix";
 
 import { theme } from "~/theme";
@@ -29,41 +30,43 @@ export const meta: MetaFunction = () => ({
 export default function App() {
   return (
     <MantineProvider theme={theme} withGlobalStyles withNormalizeCSS>
-      <html lang="en">
-        <head>
-          <Meta />
-          <Links />
-          <StylesPlaceholder />
-        </head>
-        <body>
-          <AppShell
-            header={
-              <Header height={60}>
-                <Container sx={{ height: "100%" }}>
-                  <Group sx={{ height: "100%" }}>
-                    <Anchor component={Link} to="/">
-                      CDB
-                    </Anchor>
-                  </Group>
-                </Container>
-              </Header>
-            }
-            styles={{
-              main: {
-                paddingLeft: 0,
-                paddingRight: 0,
-              },
-            }}
-          >
-            <Container>
-              <Outlet />
-            </Container>
-            <ScrollRestoration />
-            <Scripts />
-            <LiveReload />
-          </AppShell>
-        </body>
-      </html>
+      <NotificationsProvider>
+        <html lang="en">
+          <head>
+            <Meta />
+            <Links />
+            <StylesPlaceholder />
+          </head>
+          <body>
+            <AppShell
+              header={
+                <Header height={60}>
+                  <Container sx={{ height: "100%" }}>
+                    <Group sx={{ height: "100%" }}>
+                      <Anchor component={Link} to="/">
+                        CDB
+                      </Anchor>
+                    </Group>
+                  </Container>
+                </Header>
+              }
+              styles={{
+                main: {
+                  paddingLeft: 0,
+                  paddingRight: 0,
+                },
+              }}
+            >
+              <Container>
+                <Outlet />
+              </Container>
+              <ScrollRestoration />
+              <Scripts />
+              <LiveReload />
+            </AppShell>
+          </body>
+        </html>
+      </NotificationsProvider>
     </MantineProvider>
   );
 }
