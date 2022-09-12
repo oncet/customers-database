@@ -1,5 +1,5 @@
-import { ActionFunction, json, MetaFunction } from "@remix-run/node";
-import { redirect } from "@remix-run/node";
+import type { ActionFunction, MetaFunction } from "@remix-run/node";
+import { json, redirect } from "@remix-run/node";
 import { Form, Link, useActionData } from "@remix-run/react";
 import {
   Anchor,
@@ -8,13 +8,11 @@ import {
   Breadcrumbs,
   TextInput,
   Button,
-  Text,
   Notification,
 } from "@mantine/core";
 import { assert, nonempty, object, string, StructError } from "superstruct";
 
 import { db } from "~/utils/db.server";
-import { Prisma } from "@prisma/client";
 
 export const meta: MetaFunction = () => {
   return {
@@ -24,15 +22,7 @@ export const meta: MetaFunction = () => {
 
 export const action: ActionFunction = async ({ request }) => {
   // TODO de-dupes duplicated values
-  const { firstName, lastName, email } = Object.fromEntries(
-    await request.formData()
-  );
-
-  const customerData = {
-    firstName,
-    lastName,
-    email,
-  };
+  const inputData = Object.fromEntries(await request.formData());
 
   const Customer = object({
     firstName: nonempty(string()),
@@ -41,26 +31,22 @@ export const action: ActionFunction = async ({ request }) => {
   });
 
   try {
-    assert(customerData, Customer);
+    assert(inputData, Customer);
 
     const newCustomer = await db.customer.create({
-      data: customerData,
+      data: inputData,
     });
 
     return redirect("/customers/" + newCustomer.id);
   } catch (error) {
     if (error instanceof StructError) {
-      console.log("StructError");
-
-      return json({ errorMessage: error.message, values: customerData });
+      return json({ errorMessage: error.message, values: inputData });
     }
   }
 };
 
 export default function AddCustomer() {
   const actionData = useActionData();
-
-  console.log("actionData", actionData);
 
   return (
     <Stack>
