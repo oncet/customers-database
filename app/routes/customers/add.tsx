@@ -1,7 +1,6 @@
-import type { ActionFunction, MetaFunction } from "@remix-run/node";
-import type { Prisma } from "@prisma/client";
-import { json, redirect } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import { ActionFunction, json, MetaFunction } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
+import { Form, Link, useActionData } from "@remix-run/react";
 import {
   Anchor,
   Title,
@@ -9,9 +8,13 @@ import {
   Breadcrumbs,
   TextInput,
   Button,
+  Text,
+  Notification,
 } from "@mantine/core";
+import { assert, nonempty, object, string, StructError } from "superstruct";
 
 import { db } from "~/utils/db.server";
+import { Prisma } from "@prisma/client";
 
 export const meta: MetaFunction = () => {
   return {
@@ -19,25 +22,46 @@ export const meta: MetaFunction = () => {
   };
 };
 
-export const action: ActionFunction = async ({ request, params }) => {
-  const formData = await request.formData();
+export const action: ActionFunction = async ({ request }) => {
+  // TODO de-dupes duplicated values
+  const { firstName, lastName, email } = Object.fromEntries(
+    await request.formData()
+  );
 
-  const firstName = formData.get("firstName") as string;
-  const lastName = formData.get("lastName") as string;
-  const email = formData.get("email") as string;
+  const customerData = {
+    firstName,
+    lastName,
+    email,
+  };
 
-  const customer = await db.customer.create({
-    data: {
-      firstName,
-      lastName,
-      email,
-    },
+  const Customer = object({
+    firstName: nonempty(string()),
+    lastName: nonempty(string()),
+    email: nonempty(string()),
   });
 
-  return redirect("/customers/" + customer.id);
+  try {
+    assert(customerData, Customer);
+
+    const newCustomer = await db.customer.create({
+      data: customerData,
+    });
+
+    return redirect("/customers/" + newCustomer.id);
+  } catch (error) {
+    if (error instanceof StructError) {
+      console.log("StructError");
+
+      return json({ errorMessage: error.message, values: customerData });
+    }
+  }
 };
 
 export default function AddCustomer() {
+  const actionData = useActionData();
+
+  console.log("actionData", actionData);
+
   return (
     <Stack>
       <Breadcrumbs>
@@ -56,9 +80,26 @@ export default function AddCustomer() {
       <Title>Add new customer</Title>
       <Form method="put">
         <Stack>
-          <TextInput label="First name" name="firstName" />
-          <TextInput label="Last name" name="lastName" />
-          <TextInput label="E-mail address" name="email" />
+          <TextInput
+            label="First name"
+            name="firstName"
+            defaultValue={actionData?.values.firstName}
+          />
+          <TextInput
+            label="Last name"
+            name="lastName"
+            defaultValue={actionData?.values.lastName}
+          />
+          <TextInput
+            label="E-mail address"
+            name="email"
+            defaultValue={actionData?.values.email}
+          />
+          {actionData?.errorMessage && (
+            <Notification color="red" disallowClose>
+              {actionData.errorMessage}
+            </Notification>
+          )}
           <Button type="submit">Add new customer</Button>
         </Stack>
       </Form>
