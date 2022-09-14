@@ -5,7 +5,7 @@ import type {
 } from "@remix-run/node";
 import type { Prisma } from "@prisma/client";
 import { json, redirect } from "@remix-run/node";
-import { Form, Link, useLoaderData } from "@remix-run/react";
+import { Form, Link, useActionData, useLoaderData } from "@remix-run/react";
 import {
   Anchor,
   Title,
@@ -15,7 +15,9 @@ import {
   Button,
   Modal,
   Text,
+  Notification,
 } from "@mantine/core";
+import { assert, nonempty, object, string, StructError } from "superstruct";
 
 import { db } from "~/utils/db.server";
 import { useState } from "react";
@@ -73,35 +75,44 @@ export const action: ActionFunction = async ({ request, params }) => {
     });
   }
 
-  const formData = await request.formData();
+  // TODO de-dupes duplicated values
+  const inputData = Object.fromEntries(await request.formData());
 
-  const firstName = formData.get("firstName") as string;
-  const lastName = formData.get("lastName") as string;
-  const email = formData.get("email") as string;
-
-  await db.customer.update({
-    where: {
-      id: Number(params.id),
-    },
-    data: {
-      firstName,
-      lastName,
-      email,
-    },
+  const Customer = object({
+    firstName: nonempty(string()),
+    lastName: nonempty(string()),
+    email: nonempty(string()),
   });
 
-  session.flash("customerUpdated", true);
+  try {
+    assert(inputData, Customer);
 
-  return redirect("/customers/" + params.id, {
-    headers: {
-      "Set-Cookie": await commitSession(session),
-    },
-  });
+    await db.customer.update({
+      where: {
+        id: Number(params.id),
+      },
+      data: inputData,
+    });
+
+    session.flash("customerUpdated", true);
+
+    return redirect("/customers/" + params.id, {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      },
+    });
+  } catch (error) {
+    if (error instanceof StructError) {
+      return json({ errorMessage: error.message, values: inputData });
+    }
+  }
 };
 
 export default function EditCustomer() {
   const { id, firstName, lastName, email, jobs } =
     useLoaderData<CustomerWithJobs>();
+
+  const actionData = useActionData();
 
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
 
@@ -142,18 +153,23 @@ export default function EditCustomer() {
             <TextInput
               label="First name"
               name="firstName"
-              defaultValue={firstName}
+              defaultValue={actionData?.values.firstName || firstName}
             />
             <TextInput
               label="Last name"
               name="lastName"
-              defaultValue={lastName}
+              defaultValue={actionData?.values.lastName || lastName}
             />
             <TextInput
               label="E-mail address"
               name="email"
-              defaultValue={email}
+              defaultValue={actionData?.values.email || email}
             />
+            {actionData?.errorMessage && (
+              <Notification color="red" disallowClose>
+                {actionData.errorMessage}
+              </Notification>
+            )}
             <Button type="submit">Update customer</Button>
           </Stack>
         </Form>
